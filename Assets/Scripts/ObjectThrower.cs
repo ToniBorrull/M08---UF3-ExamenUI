@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UI;
 
 public class ObjectThrower : MonoBehaviour
@@ -21,11 +22,16 @@ public class ObjectThrower : MonoBehaviour
     public float forceSpeed;
     public float distance = 1;
 
-
+    Inputs inputs;
+    private void Start()
+    {
+        inputs = new Inputs();
+        inputs.Player.Enable();
+    }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (inputs.Player.ThrowItems.IsPressed())
         {
             force += forceSpeed * Time.deltaTime;
             if (force < forceMin)
@@ -41,7 +47,7 @@ public class ObjectThrower : MonoBehaviour
 
             forceIndicator.fillAmount = force / forceMax;
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (inputs.Player.ThrowItems.WasReleasedThisFrame())
         {
             GameObject temp = Instantiate(objects[selected].obj, transform.position + transform.forward * distance, transform.rotation);
             temp.GetComponent<Rigidbody>().AddForce(transform.forward * force, ForceMode.VelocityChange);
@@ -49,7 +55,7 @@ public class ObjectThrower : MonoBehaviour
         }
         else
         {
-            selected += (int)Input.mouseScrollDelta.y;
+            selected += (int)inputs.Player.ChangeItems.ReadValue<float>();
             if(selected >= objects.Length)
             {
                 selected = 0;

@@ -8,10 +8,15 @@ public class InventoryManager : MonoBehaviour
     public RectTransform rect;
     public GameObject inventory;
     public Slider horizontal, vertical;
-
+    Inputs inputs;
+    private void Start()
+    {
+        inputs = new Inputs();
+        inputs.Player.Enable();
+    }
     private void Update()
     {
-        if (Input.GetButtonDown("Inventory"))
+        if (inputs.Player.Inventory.WasPressedThisFrame())
         {
             if (inventory.activeSelf)
             {
