@@ -144,7 +144,8 @@ public class ObjectPicker : MonoBehaviour
     {
         if(pickableObject != null)
             pickingIcon.transform.position = Vector2.MoveTowards(pickingIcon.transform.position, cam.WorldToScreenPoint(pickableObject.transform.position), pickingIconSpeed);
-
+        else
+            pickingIcon.GetComponent<CanvasGroup>().alpha = 0f;
 
         if (state == PICKSTATE.AVAILABLE)
         {
