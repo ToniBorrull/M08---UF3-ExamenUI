@@ -38,6 +38,8 @@ public class ObjectThrower : MonoBehaviour
                 force = forceMax;
                 forceSpeed *= -1;
             }
+
+            forceIndicator.fillAmount = force / forceMax;
         }
         else if (Input.GetMouseButtonUp(1))
         {

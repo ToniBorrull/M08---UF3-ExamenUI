@@ -142,7 +142,23 @@ public class ObjectPicker : MonoBehaviour
     }
     void HandlePickingUI()
     {
+        if(pickableObject != null)
+            pickingIcon.transform.position = Vector2.MoveTowards(pickingIcon.transform.position, cam.WorldToScreenPoint(pickableObject.transform.position), pickingIconSpeed);
 
+
+        if (state == PICKSTATE.AVAILABLE)
+        {
+            pickingIcon.GetComponent<CanvasGroup>().alpha = 1.0f;
+        }
+        else if (state == PICKSTATE.BLOCKED)
+        {
+            pickingIcon.GetComponent<CanvasGroup>().alpha = 0.5f;
+        }
+        else if(state == PICKSTATE.FAR)
+        {
+            pickingIcon.GetComponent<CanvasGroup>().alpha = 0.25f;
+        }
+ 
     }
 
     void StartPickup()
